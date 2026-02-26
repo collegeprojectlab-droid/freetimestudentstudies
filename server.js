@@ -20,12 +20,12 @@ import db from 'db'
 dotenv.config();
 
 // Import routes
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/users');
-const scheduleRoutes = require('./routes/schedule');
-const groupRoutes = require('./routes/groups');
-const analyticsRoutes = require('./routes/analytics');
-const adminRoutes = require('./routes/admin');
+import authRoutes from './routes/auth.js';
+import userRoutes from './routes/users.js';
+import scheduleRoutes from './routes/schedule.js';
+import groupRoutes from './routes/groups.js';
+import analyticsRoutes from './routes/analytics.js';
+import adminRoutes from './routes/admin.js';
 
 // Initialize express app
 const app = express();
@@ -323,6 +323,7 @@ server.listen(PORT, () => {
 });
 
 module.exports = { app, server, io };
+
 
 
 
