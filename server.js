@@ -5,6 +5,8 @@
 
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
+console.log('Database exists?', fs.existsSync('./db/database.js'));
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
@@ -332,6 +334,7 @@ server.listen(PORT, () => {
 });
 
 export { app, server, io };
+
 
 
 
