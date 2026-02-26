@@ -1,14 +1,13 @@
 {
   "name": "studysync-complete",
   "version": "3.0.0",
-  "type": "module",
   "description": "Complete multi-user study planner with AI scheduling",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
     "seed": "node seed.js",
-    "test": "jest",
+    "test": "jest"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.97.0",
@@ -33,7 +32,7 @@
     "sharp": "^0.32.5",
     "socket.io": "^4.6.2",
     "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.6",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "jest": "^29.6.4",
@@ -41,7 +40,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  
+  "license": "ISC"
 }
-
