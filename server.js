@@ -24,7 +24,7 @@ const __dirname = path.dirname(__filename);
 // Load environment variables
 dotenv.config();
 
-// Routes
+// Routes (imported only once)
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 import scheduleRoutes from './routes/schedule.js';
@@ -34,27 +34,18 @@ import adminRoutes from './routes/admin.js';
 
 // SQLite session store
 const SQLiteStore = connectSqlite3(session);
-// Load environment variables
-dotenv.config();
-
-// Import routes
-import authRoutes from './routes/auth.js';
-import userRoutes from './routes/users.js';
-import scheduleRoutes from './routes/schedule.js';
-import groupRoutes from './routes/groups.js';
-import analyticsRoutes from './routes/analytics.js';
-import adminRoutes from './routes/admin.js';
 
 // Initialize express app
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server, {
+
+// Correct Socket.IO usage
+const io = new SocketIO(server, {
     cors: {
         origin: process.env.BASE_URL || 'http://localhost:3000',
         credentials: true
     }
 });
-
 // ========== SECURITY MIDDLEWARE ==========
 
 // Helmet for security headers
@@ -341,6 +332,7 @@ server.listen(PORT, () => {
 });
 
 module.exports = { app, server, io };
+
 
 
 
