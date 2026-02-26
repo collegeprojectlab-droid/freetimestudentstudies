@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySync - Dashboard</title>
+    <link rel="stylesheet" href="/css.css">
+    <link rel="stylesheet" href="/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="/dashboard" class="logo">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>StudySync</span>
+                </a>
+                <div class="nav-links">
+                    <a href="/dashboard" class="active">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="/schedule">
+                        <i class="fas fa-calendar"></i>
+                        <span>Schedule</span>
+                    </a>
+                    <a href="/groups">
+                        <i class="fas fa-users"></i>
+                        <span>Groups</span>
+                    </a>
+                    <a href="/analytics">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </a>
+                    <a href="/materials">
+                        <i class="fas fa-book"></i>
+                        <span>Materials</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-right">
+                <!-- Search -->
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search friends, groups..." id="globalSearch">
+                </div>
+
+                <!-- Notifications -->
+                <div class="notifications-dropdown" id="notificationsDropdown">
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notificationCount">3</span>
+                    </button>
+                    <div class="dropdown-content" id="notificationsList">
+                        <!-- Notifications loaded via JS -->
+                    </div>
+                </div>
+
+                <!-- Messages -->
+                <div class="messages-dropdown">
+                    <button class="messages-btn">
+                        <i class="fas fa-envelope"></i>
+                        <span class="badge" id="messageCount">2</span>
+                    </button>
+                    <div class="dropdown-content" id="messagesList">
+                        <!-- Messages loaded via JS -->
+                    </div>
+                </div>
+
+                <!-- User Menu -->
+                <div class="user-menu">
+                    <button class="user-btn" id="userMenuBtn">
+                        <img src="" alt="Avatar" id="userAvatar" class="avatar">
+                        <span id="userName">Loading...</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content user-dropdown">
+                        <a href="/profile">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a href="/settings">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <a href="/help">
+                            <i class="fas fa-question-circle"></i> Help
+                        </a>
+                        <div class="divider"></div>
+                        <a href="#" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar left-sidebar">
+            <!-- Welcome Card -->
+            <div class="welcome-card glass-effect">
+                <div class="welcome-content">
+                    <h2>Welcome back, <span id="welcomeName">Student</span>!</h2>
+                    <p id="currentDate"></p>
+                    <div class="quote-container">
+                        <i class="fas fa-quote-left"></i>
+                        <span id="dailyQuote">The expert in anything was once a beginner.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's Focus -->
+            <div class="focus-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-bullseye"></i> Today's Focus</h3>
+                    <button class="btn-icon" onclick="dashboard.editFocus()">
+                        <i class="fas fa-pen"></i>
+                    </button>
+                </div>
+                <div class="focus-content" id="todayFocus">
+                    <div class="focus-item">
+                        <span class="subject-badge math">Math</span>
+                        <span class="focus-time">09:00 - 10:30</span>
+                    </div>
+                    <div class="focus-item">
+                        <span class="subject-badge physics">Physics</span>
+                        <span class="focus-time">14:00 - 15:30</span>
+                    </div>
+                </div>
+                <button class="btn-add-focus" onclick="dashboard.addFocus()">
+                    <i class="fas fa-plus"></i> Add Focus Item
+                </button>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-card">
+                <h3><i class="fas fa-chart-simple"></i> Quick Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-icon streak">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="streakCount">7</span>
+                            <span class="stat-label">Day Streak</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon hours">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="hoursStudied">28.5</span>
+                            <span class="stat-label">Hours</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon subjects">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="subjectCount">5</span>
+                            <span class="stat-label">Subjects</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon tasks">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="taskCompletion">78%</span>
+                            <span class="stat-label">Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Study Partners Online -->
+            <div class="online-friends-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-circle online"></i> Study Partners Online</h3>
+                    <span class="online-count" id="onlineCount">5 online</span>
+                </div>
+                <div class="online-list" id="onlineFriendsList">
+                    <!-- Dynamically loaded -->
+                </div>
+                <button class="btn-view-all" onclick="dashboard.viewAllFriends()">
+                    View All Friends <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <button class="quick-action-btn" onclick="dashboard.startPomodoro()">
+                    <i class="fas fa-clock"></i>
+                    <span>Pomodoro</span>
+                </button>
+                <button class="quick-action-btn" onclick="dashboard.quickSchedule()">
+                    <i class="fas fa-calendar-plus"></i>
+                    <span>Quick Schedule</span>
+                </button>
+                <button class="quick-action-btn" onclick="dashboard.createFlashcard()">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Flashcards</span>
+                </button>
+                <button class="quick-action-btn" onclick="dashboard.joinGroup()">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Join Group</span>
+                </button>
+                <button class="quick-action-btn" onclick="dashboard.studyTogether()">
+                    <i class="fas fa-video"></i>
+                    <span>Study Together</span>
+                </button>
+            </div>
+
+            <!-- Today's Schedule -->
+            <section class="schedule-section card">
+                <div class="section-header">
+                    <h2><i class="fas fa-calendar-day"></i> Today's Schedule</h2>
+                    <div class="header-actions">
+                        <button class="btn-text" onclick="dashboard.refreshSchedule()">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button class="btn-text" onclick="dashboard.viewFullSchedule()">
+                            View Full <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="timeline" id="todayTimeline">
+                    <!-- Timeline loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Study Groups -->
+            <section class="groups-section card">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> Your Study Groups</h2>
+                    <button class="btn-primary" onclick="dashboard.createGroup()">
+                        <i class="fas fa-plus"></i> Create Group
+                    </button>
+                </div>
+                <div class="groups-grid" id="groupsGrid">
+                    <!-- Groups loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Recent Activity & Upcoming -->
+            <div class="activity-grid">
+                <!-- Recent Activity -->
+                <section class="activity-section card">
+                    <h2><i class="fas fa-history"></i> Recent Activity</h2>
+                    <div class="activity-list" id="recentActivity">
+                        <!-- Activity loaded dynamically -->
+                    </div>
+                    <button class="btn-text view-more">View More</button>
+                </section>
+
+                <!-- Upcoming Deadlines -->
+                <section class="deadlines-section card">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Upcoming Deadlines</h2>
+                    <div class="deadlines-list" id="upcomingDeadlines">
+                        <!-- Deadlines loaded dynamically -->
+                    </div>
+                    <button class="btn-text view-more">View All</button>
+                </section>
+            </div>
+
+            <!-- Recommended Study Partners -->
+            <section class="recommendations-section card">
+                <div class="section-header">
+                    <h2><i class="fas fa-handshake"></i> Recommended Study Partners</h2>
+                    <button class="btn-text" onclick="dashboard.refreshRecommendations()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+                <div class="partners-grid" id="recommendedPartners">
+                    <!-- Partners loaded dynamically -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="sidebar right-sidebar">
+            <!-- Pomodoro Timer -->
+            <div class="pomodoro-card card">
+                <h3><i class="fas fa-hourglass-half"></i> Pomodoro Timer</h3>
+                <div class="timer-display" id="pomodoroTimer">25:00</div>
+                <div class="timer-controls">
+                    <button class="timer-btn" onclick="dashboard.startTimer()">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="timer-btn" onclick="dashboard.pauseTimer()">
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button class="timer-btn" onclick="dashboard.resetTimer()">
+                        <i class="fas fa-undo"></i>
+                    </button>
+                </div>
+                <div class="timer-stats">
+                    <span id="pomodoroCycles">0/4 cycles</span>
+                </div>
+            </div>
+
+            <!-- Study Progress -->
+            <div class="progress-card card">
+                <h3><i class="fas fa-chart-pie"></i> Weekly Progress</h3>
+                <canvas id="weeklyProgressChart"></canvas>
+                <div class="progress-goal">
+                    <span>This week's goal: <strong id="weeklyGoal">14/20 hrs</strong></span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="weeklyProgressFill" style="width: 70%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flashcards Quick Review -->
+            <div class="flashcards-card card">
+                <h3><i class="fas fa-layer-group"></i> Quick Review</h3>
+                <div class="flashcard-preview" id="flashcardPreview">
+                    <div class="flashcard-content">
+                        <p>What is the derivative of e^x?</p>
+                    </div>
+                </div>
+                <div class="flashcard-controls">
+                    <button class="btn-flip" onclick="dashboard.flipCard()">
+                        <i class="fas fa-sync-alt"></i> Flip
+                    </button>
+                    <button class="btn-next" onclick="dashboard.nextCard()">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Upcoming Events -->
+            <div class="events-card card">
+                <h3><i class="fas fa-calendar-alt"></i> Upcoming Events</h3>
+                <div class="events-list" id="upcomingEvents">
+                    <!-- Events loaded dynamically -->
+                </div>
+                <button class="btn-add-event" onclick="addEvent()">
+                    <i class="fas fa-plus"></i> Add Event
+                </button>
+            </div>
+
+            <!-- Motivational Quote -->
+            <div class="quote-card card">
+                <i class="fas fa-quote-right"></i>
+                <p id="motivationalQuote">The secret of getting ahead is getting started.</p>
+                <span class="quote-author">- Mark Twain</span>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modals -->
+    <div id="quickScheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Quick Schedule</h3>
+                <button class="close-modal" onclick="closeModal('quickScheduleModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="quickScheduleForm">
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <select id="quickSubject" required>
+                            <option value="">Select Subject</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="quickDate" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Start Time</label>
+                            <input type="time" id="quickStartTime" required>
+                        </div>
+                        <div class="form-group">
+                            <label>End Time</label>
+                            <input type="time" id="quickEndTime" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Topic</label>
+                        <input type="text" id="quickTopic" placeholder="e.g., Chapter 5 Review">
+                    </div>
+                    <button type="submit" class="btn-primary">Add to Schedule</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="createGroupModal" class="modal">
+        <!-- Group creation modal content -->
+    </div>
+
+    <div id="startPomodoroModal" class="modal">
+        <!-- Pomodoro settings modal -->
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/dashboardjavascript.js"></script>
+    <div id="toast" class="toast"></div>
+</body>
+</html>
