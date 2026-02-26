@@ -3,18 +3,18 @@
 // Version 3.0 - Multi-user with all features
 // ============================================
 
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-const session = require('express-session');
-const SQLiteStore = require('connect-sqlite3')(session);
-const dotenv = require('dotenv');
-const http = require('http');
-const socketIO = require('socket.io');
-const cron = require('node-cron');
-const db = require('./db/database');
+import express = require('express');
+import path = require('path');
+import cors = require('cors');
+import helmet = require('helmet');
+import rateLimit = require('express-rate-limit');
+import session = require('express-session');
+import SQLiteStore = require('connect-sqlite3')(session);
+import dotenv = require('dotenv');
+import http = require('http');
+import socketIO = require('socket.io');
+import cron = require('node-cron');
+import db = require('./db/database');
 
 // Load environment variables
 dotenv.config();
@@ -323,4 +323,5 @@ server.listen(PORT, () => {
 });
 
 module.exports = { app, server, io };
+
 
