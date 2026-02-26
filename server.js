@@ -4,18 +4,36 @@
 // ============================================
 
 import express from 'express';
-import path from 'path'
-import cors from 'cors'
-import helmet from 'helmet'
-import rateLimit from 'reatelimit'
-import session from 'session'
-import SQLiteStore from 'SQLiteStore'
-import dotenv from 'dotenv'
-import http from 'http'
-import socketIO 'socketIO'
-import cron from 'cron'
-import db from 'db'
+import path from 'path';
+import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import session from 'express-session';
+import connectSqlite3 from 'connect-sqlite3';
+import dotenv from 'dotenv';
+import http from 'http';
+import { Server as SocketIO } from 'socket.io';
+import cron from 'node-cron';
+import db from './db/database.js';
 
+// For __dirname in ESM
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load environment variables
+dotenv.config();
+
+// Routes
+import authRoutes from './routes/auth.js';
+import userRoutes from './routes/users.js';
+import scheduleRoutes from './routes/schedule.js';
+import groupRoutes from './routes/groups.js';
+import analyticsRoutes from './routes/analytics.js';
+import adminRoutes from './routes/admin.js';
+
+// SQLite session store
+const SQLiteStore = connectSqlite3(session);
 // Load environment variables
 dotenv.config();
 
@@ -323,6 +341,7 @@ server.listen(PORT, () => {
 });
 
 module.exports = { app, server, io };
+
 
 
 
